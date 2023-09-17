@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script type="module">
+      import { addSeat, render } from "./build/debug.js";
+
+      function importMap(file) {
+        const ids = [];
+        for (let i = 0; i < file.seats.length; i++) {
+          const seat = file.seats[i];
+
+          addSeat(seat.label, seat.coordinates, seat.size, seat.occupied, seat.id);
+
+          ids.push(seat.id);
+        }
+
+        document.body.innerHTML = render();
+
+        for (let id of ids) {
+            document.getElementById(id.toString()).addEventListener('click', (e) => {
+                console.log(e.target.id)
+            })
+        }
+
+        return;
+      }
+
+      function handleSelect(id) {
+        console.log(id);
+      }
+
+      importMap({
+        seats: [
+          {
+            id: 0,
+            coordinates: [0, 0],
+            size: [40, 40],
+            label: "0",
+            occupied: true,
+          },
+          {
+            id: 1,
+            coordinates: [45, 0],
+            size: [40, 40],
+            label: "1",
+            occupied: false,
+          },
+          {
+            id: 2,
+            coordinates: [90, 0],
+            size: [40, 40],
+            label: "2",
+            occupied: false,
+          },
+        ],
+      });
+    </script>
+    <style>
+        .seat:hover {
+            fill: #0F0;
+        }
+        .seat {
+            fill: rgb(6, 107, 107);
+        }
+        .seat.occupied {
+            fill: #F00;
+        }
+        .seat.occupied:hover {
+            fill: #F0F;
+        }
+        .label {
+            text-anchor: middle;
+            dominant-baseline: middle;
+            user-select: none;
+            pointer-events: none;
+        }
+    </style>
+  </head>
+  <body></body>
+</html>
